@@ -34,9 +34,17 @@ class RegisteredUserController extends Controller
             'logo' => ['required', File::types(['png', 'jpg', 'webp'])],
         ]);
 
+        //dd($request->logo->store('logos'));
         $user = User::create($userAttributes);
 
+        /*$image = $request->logo;
+        $imageName = time() . '_' . $image->getClientOriginalName();
+        $image->move(public_path('logos'), $imageName)*/
+
         $logoPath = $request->logo->store('public/logos');
+        $logoPath = str_replace('public/', '', $logoPath);
+
+
 
         $user->employer()->create([
             'name' => $employerAttributes['employer'],
